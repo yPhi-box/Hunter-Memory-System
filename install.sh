@@ -22,6 +22,25 @@ fi
 echo "Detected OS: $OS"
 echo ""
 
+# Check for Homebrew on Mac
+if [ "$OS" = "mac" ]; then
+    if ! command -v brew &> /dev/null; then
+        echo "Homebrew not found. Installing Homebrew..."
+        echo "(This will prompt for your password)"
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        
+        if ! command -v brew &> /dev/null; then
+            echo "ERROR: Homebrew installation failed or not in PATH"
+            echo "Please install Homebrew manually: https://brew.sh"
+            echo "Then re-run this installer"
+            exit 1
+        fi
+        
+        echo "✓ Homebrew installed successfully"
+        echo ""
+    fi
+fi
+
 # Check system requirements
 echo "Checking system requirements..."
 echo ""
