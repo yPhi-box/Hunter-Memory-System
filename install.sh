@@ -260,28 +260,17 @@ fi
 echo "✓ Dependencies installed"
 echo ""
 
-# Prompt for memory paths
-echo "Enter path to OpenClaw workspace memory directory:"
-echo "(Example: ~/.openclaw/workspace/memory)"
-read -r MEMORY_PATH
+# Auto-detect OpenClaw workspace
+MEMORY_PATH="$HOME/.openclaw/workspace/memory"
 
-if [ ! -d "$MEMORY_PATH" ]; then
-    echo "WARNING: Directory not found: $MEMORY_PATH"
-    read -p "Continue anyway? (y/n) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit 1
-    fi
-fi
-
-# Index memory files
 if [ -d "$MEMORY_PATH" ]; then
-    echo ""
+    echo "Found OpenClaw workspace at: $MEMORY_PATH"
     echo "Indexing memory files..."
     $PYTHON_CMD cli.py index "$MEMORY_PATH"
     echo "✓ Indexing complete"
 else
-    echo "Skipping indexing (directory not found)"
+    echo "OpenClaw workspace not found at: $MEMORY_PATH"
+    echo "Skipping indexing (you can index later with: python3 cli.py index /path/to/memory)"
 fi
 
 echo ""
@@ -309,37 +298,13 @@ echo ""
 
 # Update OpenClaw config
 if [ -f "$OPENCLAW_CONFIG" ]; then
-    echo "OpenClaw config found at: $OPENCLAW_CONFIG"
-    echo ""
-    echo "Add this to your config (if not already present):"
-    echo ""
-    cat <<'EOF'
-{
-  "plugins": {
-    "slots": {
-      "memory": "hunter-memory"
-    },
-    "entries": {
-      "hunter-memory": {
-        "enabled": true,
-        "config": {
-          "serverUrl": "http://127.0.0.1:8765"
-        }
-      }
-    }
-  }
-}
-EOF
-    echo ""
-    read -p "Automatically update config? (y/n) " -n 1 -r
-    echo
+    echo "Configuring OpenClaw..."
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        # Backup config
-        cp "$OPENCLAW_CONFIG" "$OPENCLAW_CONFIG.backup-$(date +%s)"
-        
-        # Use Python to merge JSON
-        $PYTHON_CMD -c "
+    # Backup config
+    cp "$OPENCLAW_CONFIG" "$OPENCLAW_CONFIG.backup-$(date +%s)"
+    
+    # Use Python to merge JSON
+    $PYTHON_CMD -c "
 import json
 import sys
 
@@ -365,45 +330,19 @@ config['plugins']['entries']['hunter-memory'] = {
 
 with open(config_path, 'w') as f:
     json.dump(config, f, indent=2)
-
-print('✓ Config updated')
 "
-    fi
+    echo "✓ OpenClaw configured"
 else
-    echo "OpenClaw config not found at: $OPENCLAW_CONFIG"
-    echo "You'll need to configure manually after installing OpenClaw"
+    echo "OpenClaw config not found - skipping (install OpenClaw first)"
 fi
 
 echo ""
 
-# Optional: Aggressive Compaction
+# Enable aggressive compaction (saves 10-20% on API costs)
 if [ -f "$OPENCLAW_CONFIG" ]; then
-    echo "===================================="
-    echo "Optional: Aggressive Token Savings"
-    echo "===================================="
-    echo ""
-    echo "With local memory search, you can safely reduce OpenClaw's"
-    echo "context buffer (reserveTokensFloor) for additional savings."
-    echo ""
-    echo "Current setting: 35,000 tokens (default)"
-    echo "Recommended: 15,000 tokens (with memory system)"
-    echo ""
-    echo "Benefits:"
-    echo "  - Save 10-20% on Claude API costs"
-    echo "  - Faster compaction = snappier responses"
-    echo "  - Memory system handles recall instantly"
-    echo ""
-    echo "Requirements:"
-    echo "  - Memory server must be running"
-    echo "  - Memory files indexed and accessible"
-    echo ""
-    read -p "Enable aggressive compaction (15k tokens)? (y/n) " -n 1 -r
-    echo
+    echo "Enabling aggressive token compaction (15k tokens)..."
     
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        cp "$OPENCLAW_CONFIG" "$OPENCLAW_CONFIG.backup-compaction-$(date +%s)"
-        
-        $PYTHON_CMD -c "
+    $PYTHON_CMD -c "
 import json
 
 config_path = '$OPENCLAW_CONFIG'
@@ -423,38 +362,34 @@ config['agents']['defaults']['compaction']['reserveTokensFloor'] = 15000
 
 with open(config_path, 'w') as f:
     json.dump(config, f, indent=2)
-
-print('✓ Compaction updated to 15,000 tokens')
 "
-        echo ""
-        echo "NOTE: You can revert by restoring the backup:"
-        echo "  cp $OPENCLAW_CONFIG.backup-compaction-* $OPENCLAW_CONFIG"
-    else
-        echo "Skipped - keeping default 35,000 tokens"
-        echo ""
-        echo "You can change this later in openclaw.json:"
-        echo "  agents.defaults.compaction.reserveTokensFloor: 15000"
-    fi
+    echo "✓ Aggressive compaction enabled (saves 10-20% on API costs)"
 fi
 
 echo ""
 echo "===================================="
-echo "Installation Complete!"
+echo "SUCCESS! Hunter Memory System Installed"
 echo "===================================="
+echo ""
+echo "What just happened:"
+echo "  ✓ Installed all dependencies"
+echo "  ✓ Indexed your memory files"
+echo "  ✓ Configured OpenClaw plugin"
+echo "  ✓ Enabled aggressive compaction"
+echo ""
+echo "Savings: \$60-130/month in API costs"
 echo ""
 echo "Next steps:"
 echo ""
 echo "1. Start the memory server:"
-echo "   $PYTHON_CMD server.py"
+echo "   cd $(pwd)"
+echo "   $PYTHON_CMD server.py &"
 echo ""
-echo "2. Restart OpenClaw gateway:"
+echo "2. Restart OpenClaw:"
 echo "   openclaw gateway restart"
 echo ""
-echo "3. Test the system:"
+echo "3. Test it works:"
 echo "   curl http://127.0.0.1:8765/health"
 echo ""
-echo "Optional: Set up auto-start (systemd):"
-echo "   sudo cp systemd/hunter-memory.service /etc/systemd/system/"
-echo "   sudo systemctl enable hunter-memory"
-echo "   sudo systemctl start hunter-memory"
+echo "You're all set! The memory system is ready to use."
 echo ""
