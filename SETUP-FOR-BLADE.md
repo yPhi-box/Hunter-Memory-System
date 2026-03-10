@@ -1,4 +1,4 @@
-# Hunter Memory System - Setup Guide for Blade
+﻿# Hunter Memory System - Setup Guide for Blade
 
 ## What This Is
 Custom local memory system for OpenClaw with **zero API costs**. Replaces OpenClaw's built-in memory (which costs $0.013/1K tokens via OpenAI embeddings).
@@ -250,3 +250,4 @@ Send Blade these files:
 3. Optional: Pre-indexed database if you want to save him indexing time
 
 **Total transfer size:** ~10MB code + dependencies (pip downloads) + database size
+

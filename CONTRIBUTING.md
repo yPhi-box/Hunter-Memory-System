@@ -2,7 +2,7 @@
 
 Thank you for considering contributing! This project aims to provide a free, local memory system for OpenClaw users.
 
-## ðŸŽ¯ Goals
+##  Goals
 
 - Zero API costs for memory searches
 - Fast, reliable search (<100ms)
@@ -10,7 +10,7 @@ Thank you for considering contributing! This project aims to provide a free, loc
 - Cross-platform compatibility
 - Privacy-focused (all data local)
 
-## ðŸš€ Getting Started
+##  Getting Started
 
 1. **Fork the repository**
 2. **Clone your fork**
@@ -33,7 +33,7 @@ Thank you for considering contributing! This project aims to provide a free, loc
    ```
 7. **Submit a pull request**
 
-## ðŸŽ¨ Code Style
+##  Code Style
 
 **Python:**
 - PEP 8 compliant
@@ -51,7 +51,7 @@ Thank you for considering contributing! This project aims to provide a free, loc
 - Examples for complex features
 - Update README if adding features
 
-## ðŸ§ª Testing
+##  Testing
 
 Before submitting:
 
@@ -76,7 +76,7 @@ Before submitting:
    - Search queries
    - Plugin integration
 
-## ðŸ“ Pull Request Process
+##  Pull Request Process
 
 1. **Update documentation** if you're changing functionality
 2. **Add tests** for new features
@@ -85,7 +85,7 @@ Before submitting:
 5. **Describe your changes** clearly in the PR description
 6. **Link any related issues**
 
-## ðŸ› Bug Reports
+##  Bug Reports
 
 **Good bug reports include:**
 - Clear description of the issue
@@ -120,7 +120,7 @@ Before submitting:
 [Paste relevant logs here]
 ```
 
-## ðŸ’¡ Feature Requests
+##  Feature Requests
 
 **Good feature requests include:**
 - Clear use case
@@ -128,7 +128,7 @@ Before submitting:
 - Suggested implementation (optional)
 - Willingness to contribute (optional)
 
-## ðŸ” Areas for Contribution
+##  Areas for Contribution
 
 ### High Priority
 - [ ] Authentication for HTTP server
@@ -151,20 +151,20 @@ Before submitting:
 - [ ] Query history and analytics
 - [ ] Integration with other AI assistants
 
-## ðŸ“š Resources
+##  Resources
 
 - **OpenClaw Docs:** https://docs.openclaw.ai
 - **sentence-transformers:** https://www.sbert.net/
 - **sqlite-vec:** https://github.com/asg017/sqlite-vec
 - **FastAPI:** https://fastapi.tiangolo.com/
 
-## â“ Questions?
+##  Questions?
 
 - Open a [GitHub Discussion](https://github.com/yPhi-Box/hunter-memory-system/discussions)
 - Ask in [OpenClaw Discord](https://discord.com/invite/clawd)
 - Check existing issues/PRs
 
-## ðŸ“œ Code of Conduct
+##  Code of Conduct
 
 - Be respectful and constructive
 - Focus on what's best for the project
@@ -172,7 +172,8 @@ Before submitting:
 - Assume good intentions
 - Help others learn
 
-## ðŸ™ Thank You!
+##  Thank You!
 
 Every contribution makes this project better for the OpenClaw community.
+
 

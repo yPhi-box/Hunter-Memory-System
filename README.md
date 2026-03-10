@@ -6,18 +6,18 @@
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![OpenClaw Plugin](https://img.shields.io/badge/openclaw-plugin-green.svg)](https://openclaw.com)
 
-## ðŸŽ¯ What This Does
+## What This Does
 
 Replaces OpenClaw's built-in memory system with a **local, zero-cost alternative** using sentence-transformers and SQLite vector search.
 
 **Benefits:**
-- ðŸ’° **Save $50-100/month** - Zero API costs for memory searches
-- âš¡ **Faster searches** - <100ms vs 200-500ms
-- ðŸ”’ **Private** - All data stays local
-- ðŸŒ **Cross-platform** - Works on Windows, Linux, Mac
-- ðŸ“´ **Offline** - No internet required after setup
+- **Save $50-100/month** - Zero API costs for memory searches
+- **Faster searches** - <100ms vs 200-500ms
+- **Private** - All data stays local
+- **Cross-platform** - Works on Windows, Linux, Mac
+- **Offline** - No internet required after setup
 
-## ðŸš€ Quick Start
+## Quick Start
 
 ```bash
 # Clone the repository
@@ -33,13 +33,13 @@ cd hunter-memory-system
 ```
 
 **That's it!** The installer handles everything:
-- âœ… Checks system requirements
-- âœ… Installs dependencies
-- âœ… Indexes your memory files
-- âœ… Configures OpenClaw
-- âœ… Sets up auto-start (optional)
+- Checks system requirements
+- Installs dependencies
+- Indexes your memory files
+- Configures OpenClaw
+- Sets up auto-start (optional)
 
-## ðŸ“‹ Requirements
+## Requirements
 
 **Minimum:**
 - Python 3.12+
@@ -48,11 +48,11 @@ cd hunter-memory-system
 - OpenClaw 2026.2.0+
 
 **Tested on:**
-- âœ… Windows 11
-- âœ… Ubuntu 24.04
-- âš ï¸ macOS (should work, not tested)
+- Windows 11
+- Ubuntu 24.04
+- macOS (should work, not tested)
 
-## ðŸŽ¬ Demo
+## Demo
 
 ```bash
 # Start the server
@@ -74,7 +74,7 @@ You: "What do you remember about [topic]?"
 OpenClaw: [searches memory and returns results]
 ```
 
-## ðŸ“Š Cost Savings
+## Cost Savings
 
 | Setting | Savings/Month | How |
 |---------|---------------|-----|
@@ -84,17 +84,17 @@ OpenClaw: [searches memory and returns results]
 
 \* Optional setting the installer can configure (recommended: yes)
 
-## ðŸ—ï¸ Architecture
+## Architecture
 
 ```
-Memory files â†’ Chunker (500 chars) â†’ Local Embeddings (sentence-transformers)
-                                              â†“
+Memory files  Chunker (500 chars)  Local Embeddings (sentence-transformers)
+                                              
                                          SQLite DB
-                                      â†™ï¸         â†˜ï¸
+                                               
                               Vector Search    FTS5 (keyword)
-                                      â†˜ï¸         â†™ï¸
+                                               
                                     Hybrid Scorer
-                                          â†“
+                                          
                                  Ranked Results
 ```
 
@@ -106,7 +106,7 @@ Memory files â†’ Chunker (500 chars) â†’ Local Embeddings (sentence-tr
 - **Server** - FastAPI HTTP API
 - **Plugin** - OpenClaw TypeScript integration
 
-## ðŸ“– Documentation
+## Documentation
 
 - **[Quick Start Guide](QUICK-START.md)** - 5-minute setup (read this first)
 - **[Setup Guide](SETUP-FOR-BLADE.md)** - Detailed manual installation
@@ -114,7 +114,7 @@ Memory files â†’ Chunker (500 chars) â†’ Local Embeddings (sentence-tr
 - **[Plugin README](openclaw-plugin/README.md)** - OpenClaw plugin docs
 - **[Diagnostic Report](DIAGNOSTIC-REPORT.md)** - Test results
 
-## ðŸ”§ Manual Installation
+## Manual Installation
 
 If you prefer manual setup over the installer:
 
@@ -145,7 +145,7 @@ openclaw plugins install -l ./openclaw-plugin
 openclaw gateway restart
 ```
 
-## ðŸ”„ Auto-Start Setup
+## Auto-Start Setup
 
 ### Linux (systemd)
 ```bash
@@ -161,7 +161,7 @@ See [QUICK-START.md](QUICK-START.md) for launchd plist example
 ### Windows (Task Scheduler)
 See [QUICK-START.md](QUICK-START.md) for PowerShell script
 
-## ðŸ§ª Testing
+## Testing
 
 ```bash
 # Run local tests
@@ -171,7 +171,7 @@ python3 test_system.py
 python3 test_remote.py  # Edit SERVER_URL first
 ```
 
-## ðŸ› ï¸ CLI Tools
+## CLI Tools
 
 ```bash
 # Index files
@@ -187,7 +187,7 @@ python3 cli.py stats
 python3 cli.py watch /path/to/memory
 ```
 
-## ðŸ› Troubleshooting
+## Troubleshooting
 
 ### Server won't start
 ```bash
@@ -225,7 +225,7 @@ curl http://127.0.0.1:8765/stats
 python3 cli.py index /path/to/memory
 ```
 
-## ðŸ¤ Contributing
+## Contributing
 
 Contributions welcome! This is a working system but there's always room for improvement.
 
@@ -245,11 +245,11 @@ Contributions welcome! This is a working system but there's always room for impr
 4. Test thoroughly
 5. Submit a pull request
 
-## ðŸ“„ License
+## License
 
 MIT License - See [LICENSE](LICENSE) file for details
 
-## ðŸ™ Credits
+## Credits
 
 Built by Hunter (Ben Foxx) for the OpenClaw community.
 
@@ -259,17 +259,17 @@ Powered by:
 - [FastAPI](https://fastapi.tiangolo.com/) - HTTP server
 - [OpenClaw](https://openclaw.com) - AI assistant platform
 
-## ðŸ“ž Support
+## Support
 
 - **Issues:** [GitHub Issues](https://github.com/yPhi-Box/hunter-memory-system/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/yPhi-Box/hunter-memory-system/discussions)
 - **Community:** [OpenClaw Discord](https://discord.com/invite/clawd)
 
-## â­ Star History
+## Star History
 
-If this saves you money, consider giving it a star! â­
+If this saves you money, consider giving it a star! 
 
----
+--- **Made with  for the OpenClaw community**
 
-**Made with â¤ï¸ for the OpenClaw community**
+
 

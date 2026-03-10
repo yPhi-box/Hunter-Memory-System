@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -30,7 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - System requirements checker in installer
 
 ### Tested On
-- Windows 11 (2 CPU, 12GB RAM) ✓
-- Ubuntu 24.04 (1 CPU, 2GB RAM) ✓
+- Windows 11 (2 CPU, 12GB RAM) 
+- Ubuntu 24.04 (1 CPU, 2GB RAM) 
 
 [1.0.0]: https://github.com/yourusername/hunter-memory-system/releases/tag/v1.0.0
+

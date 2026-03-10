@@ -1,4 +1,4 @@
-# Ready to Publish - GitHub Setup
+﻿# Ready to Publish - GitHub Setup
 
 ## Your GitHub URLs (Updated)
 
@@ -59,20 +59,20 @@ All files have been updated with your username: **yPhi-Box**
    - Add topics: `openclaw`, `openclaw-plugin`, `memory`, `embeddings`, `sqlite`, `python`, `typescript`, `zero-cost`, `local-first`
 
 5. **Enable Features** (optional)
-   - Settings → Features
-   - ✅ Issues
-   - ✅ Discussions (for community Q&A)
+   - Settings  Features
+   -  Issues
+   -  Discussions (for community Q&A)
 
 ## What's Already Done
 
-✅ All URLs updated to `yPhi-Box`
-✅ README.md GitHub-formatted
-✅ LICENSE (MIT)
-✅ .gitignore
-✅ CONTRIBUTING.md
-✅ CHANGELOG.md
-✅ Issue templates
-✅ Complete documentation
+ All URLs updated to `yPhi-Box`
+ README.md GitHub-formatted
+ LICENSE (MIT)
+ .gitignore
+ CONTRIBUTING.md
+ CHANGELOG.md
+ Issue templates
+ Complete documentation
 
 ## After Publishing
 
@@ -95,15 +95,15 @@ You'll see on GitHub:
 
 ## First Issue to Create (Optional)
 
-Title: "Welcome! 🎉"
+Title: "Welcome! "
 ```
 This is a working memory system that saves OpenClaw users $50-100/month.
 
 If you find it useful:
-- ⭐ Star the repo
-- 🐛 Report bugs via Issues
-- 💡 Suggest features via Discussions
-- 🤝 Contribute improvements via PRs
+-  Star the repo
+-  Report bugs via Issues
+-  Suggest features via Discussions
+-  Contribute improvements via PRs
 
 Questions? Start a Discussion!
 ```
@@ -111,3 +111,4 @@ Questions? Start a Discussion!
 ---
 
 **Ready to publish in ~5 minutes!**
+

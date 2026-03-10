@@ -1,11 +1,11 @@
-# Hunter Memory System - Quick Start
+﻿# Hunter Memory System - Quick Start
 
 ## What You Get
 
-✅ **Zero API costs** for memory searches (saves $50-100/month)
-✅ **Fast search** (<100ms vs 200-500ms)
-✅ **Optional token savings** (10-20% extra with aggressive compaction)
-✅ **Works offline** (no external APIs)
+ **Zero API costs** for memory searches (saves $50-100/month)
+ **Fast search** (<100ms vs 200-500ms)
+ **Optional token savings** (10-20% extra with aggressive compaction)
+ **Works offline** (no external APIs)
 
 ## System Requirements
 
@@ -16,8 +16,8 @@
 - OpenClaw installed
 
 **Performance tested on:**
-- Windows 11 (2 CPU, 12GB RAM) ✓
-- Ubuntu 24.04 (1 CPU, 2GB RAM) ✓
+- Windows 11 (2 CPU, 12GB RAM) 
+- Ubuntu 24.04 (1 CPU, 2GB RAM) 
 - Expected to work on Mac (not tested)
 
 ## Installation (One Command)
@@ -76,7 +76,7 @@ The installer will:
 **Recommend:** Yes (y)
 
 **What it does:**
-- Changes `reserveTokensFloor` from 35,000 → 15,000 tokens
+- Changes `reserveTokensFloor` from 35,000  15,000 tokens
 - Saves 10-20% on Claude API costs
 - Requires memory server to be running
 - Can revert anytime (backup is created)
@@ -122,10 +122,10 @@ openclaw plugins list | grep hunter-memory
 ## What Gets Changed
 
 ### Always Changed
-- `plugins.slots.memory = "hunter-memory"` → Uses local memory instead of OpenAI
+- `plugins.slots.memory = "hunter-memory"`  Uses local memory instead of OpenAI
 
 ### Optionally Changed (if you say yes)
-- `agents.defaults.compaction.reserveTokensFloor = 15000` → More aggressive compaction
+- `agents.defaults.compaction.reserveTokensFloor = 15000`  More aggressive compaction
 
 ### Never Changed
 - Your model settings
@@ -234,3 +234,4 @@ python3 cli.py watch ~/.openclaw/workspace/memory
 **Issues?** 
 - Check server logs (terminal where server.py runs)
 - Check OpenClaw logs: `openclaw status`
+

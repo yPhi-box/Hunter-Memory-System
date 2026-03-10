@@ -1,16 +1,16 @@
-# Hunter Memory System - Ready to Ship
+﻿# Hunter Memory System - Ready to Ship
 
 ## What You Have
 
 A complete, production-ready memory system that:
 
-✅ **Saves $50-100/month** (zero API costs for memory searches)
-✅ **Optional 10-20% extra savings** (aggressive compaction setting)
-✅ **Works cross-platform** (Windows, Linux, Mac)
-✅ **Installs in 5 minutes** (automated installer)
-✅ **Asks smart questions** (explains options, recommends best choice)
-✅ **Creates backups** (safe to try, easy to revert)
-✅ **Tested working** (on Windows + Ubuntu VM)
+ **Saves $50-100/month** (zero API costs for memory searches)
+ **Optional 10-20% extra savings** (aggressive compaction setting)
+ **Works cross-platform** (Windows, Linux, Mac)
+ **Installs in 5 minutes** (automated installer)
+ **Asks smart questions** (explains options, recommends best choice)
+ **Creates backups** (safe to try, easy to revert)
+ **Tested working** (on Windows + Ubuntu VM)
 
 ## Token Savings Explained
 
@@ -24,7 +24,7 @@ A complete, production-ready memory system that:
 
 **2. Aggressive Compaction (Optional)**
 - **Saves:** Extra 10-20% on Claude API costs
-- **How:** Reduces context buffer from 35k → 15k tokens
+- **How:** Reduces context buffer from 35k  15k tokens
 - **Applied:** Only if user answers "yes" when installer asks
 - **Setting:** `agents.defaults.compaction.reserveTokensFloor = 15000`
 - **Safe because:** Memory system handles instant recall from database
@@ -110,14 +110,14 @@ Hunter Memory System - Installation
 
 Checking system requirements...
   RAM: 12288MB
-  ✓ Sufficient RAM for memory system
+   Sufficient RAM for memory system
   Disk space: 199168MB free
-  ✓ Sufficient disk space
+   Sufficient disk space
 
-✓ Python found: Python 3.12.3
+ Python found: Python 3.12.3
 
 Installing Python dependencies...
-✓ Dependencies installed
+ Dependencies installed
 
 Enter path to OpenClaw workspace memory directory:
 (Example: ~/.openclaw/workspace/memory)
@@ -125,14 +125,14 @@ Enter path to OpenClaw workspace memory directory:
 
 Indexing memory files...
 [progress bar]
-✓ Indexing complete
+ Indexing complete
 
 Installing OpenClaw plugin...
-✓ Plugin installed
+ Plugin installed
 
 Automatically update config? (y/n)
 > y
-✓ Config updated
+ Config updated
 
 ====================================
 Optional: Aggressive Token Savings
@@ -155,7 +155,7 @@ Requirements:
 
 Enable aggressive compaction (15k tokens)? (y/n)
 > y
-✓ Compaction updated to 15,000 tokens
+ Compaction updated to 15,000 tokens
 
 NOTE: You can revert by restoring the backup:
   cp ~/.openclaw/openclaw.json.backup-compaction-1234567890 ~/.openclaw/openclaw.json
@@ -192,9 +192,9 @@ Next steps:
 - SSD (faster than HDD)
 
 **Tested:**
-- ✅ Windows 11 (2 CPU, 12GB RAM) - Excellent
-- ✅ Ubuntu 24.04 (1 CPU, 2GB RAM) - Good
-- ⚠️ Mac - Should work (not tested)
+-  Windows 11 (2 CPU, 12GB RAM) - Excellent
+-  Ubuntu 24.04 (1 CPU, 2GB RAM) - Good
+-  Mac - Should work (not tested)
 
 ## What Argus Can Test
 
@@ -232,14 +232,14 @@ Argus already has the files at `~/hunter-memory-system` on his VM.
 ## Security & Privacy
 
 **What gets shared:**
-- ✅ All code (open, reviewable)
-- ✅ Documentation
-- ✅ Installers
+-  All code (open, reviewable)
+-  Documentation
+-  Installers
 
 **What stays private:**
-- ❌ Your auth tokens (not in package)
-- ❌ Your memory files (not in package)
-- ❌ Your database (not in package unless you choose)
+-  Your auth tokens (not in package)
+-  Your memory files (not in package)
+-  Your database (not in package unless you choose)
 
 **Network access:**
 - Server binds to `0.0.0.0` by default (LAN accessible)
@@ -262,14 +262,14 @@ Done.
 
 ## Ready to Ship?
 
-✅ Code complete and tested
-✅ Installers working (Windows + Linux)
-✅ Documentation comprehensive
-✅ Token savings explained clearly
-✅ System requirements checked
-✅ Backups automated
-✅ Cross-platform compatible
-✅ Tested on Ubuntu (via Argus VM)
+ Code complete and tested
+ Installers working (Windows + Linux)
+ Documentation comprehensive
+ Token savings explained clearly
+ System requirements checked
+ Backups automated
+ Cross-platform compatible
+ Tested on Ubuntu (via Argus VM)
 
 **Status: PRODUCTION READY**
 
@@ -298,3 +298,4 @@ Done.
 **Attachment:** `hunter-memory-system.zip`
 
 **First file to read:** `QUICK-START.md`
+
