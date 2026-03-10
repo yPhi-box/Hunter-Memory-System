@@ -73,6 +73,8 @@ echo ""
 
 # Check Python version
 PYTHON_CMD=""
+NEEDS_PYTHON_INSTALL=false
+
 if command -v python3 &> /dev/null; then
     PYTHON_VERSION=$(python3 --version 2>&1 | cut -d' ' -f2)
     PYTHON_MAJOR=$(echo "$PYTHON_VERSION" | cut -d'.' -f1)
@@ -83,16 +85,54 @@ if command -v python3 &> /dev/null; then
         PYTHON_CMD="python3"
     elif [ "$PYTHON_MAJOR" -gt 3 ]; then
         PYTHON_CMD="python3"
+    else
+        NEEDS_PYTHON_INSTALL=true
+    fi
+else
+    NEEDS_PYTHON_INSTALL=true
+fi
+
+# Install Python 3.12 if needed
+if [ "$NEEDS_PYTHON_INSTALL" = true ]; then
+    echo "Python 3.12+ not found. Installing..."
+    
+    if [ "$OS" = "linux" ]; then
+        if [[ $EUID -eq 0 ]]; then
+            # Running as root
+            if apt-get update && apt-get install -y python3.12 python3.12-venv; then
+                PYTHON_CMD="python3.12"
+                echo "✓ Python 3.12 installed successfully"
+            else
+                echo "ERROR: Failed to install Python 3.12"
+                echo "Please install manually: sudo apt install python3.12"
+                exit 1
+            fi
+        else
+            # Not root, use sudo
+            if sudo apt-get update && sudo apt-get install -y python3.12 python3.12-venv; then
+                PYTHON_CMD="python3.12"
+                echo "✓ Python 3.12 installed successfully"
+            else
+                echo "ERROR: Failed to install Python 3.12"
+                echo "Please install manually: sudo apt install python3.12"
+                exit 1
+            fi
+        fi
+    elif [ "$OS" = "mac" ]; then
+        if brew install python@3.12; then
+            PYTHON_CMD="python3.12"
+            echo "✓ Python 3.12 installed successfully"
+        else
+            echo "ERROR: Failed to install Python 3.12 via Homebrew"
+            echo "Please install manually: brew install python@3.12"
+            exit 1
+        fi
     fi
 fi
 
+# Verify we have Python now
 if [ -z "$PYTHON_CMD" ]; then
-    echo "ERROR: Python 3.12+ required but not found"
-    if [ "$OS" = "linux" ]; then
-        echo "Install: sudo apt install python3.12 python3-pip"
-    elif [ "$OS" = "mac" ]; then
-        echo "Install: brew install python@3.12"
-    fi
+    echo "ERROR: Python 3.12+ still not available after installation attempt"
     exit 1
 fi
 

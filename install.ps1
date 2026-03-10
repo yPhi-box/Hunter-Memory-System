@@ -58,9 +58,43 @@ foreach ($cmd in @("python", "python3", "py")) {
 }
 
 if (-not $pythonCmd) {
-    Write-Host "ERROR: Python 3.12+ required but not found" -ForegroundColor Red
-    Write-Host "Install from: https://www.python.org/downloads/" -ForegroundColor Yellow
-    exit 1
+    Write-Host "Python 3.12+ not found. Attempting to install..." -ForegroundColor Yellow
+    
+    # Try winget first (Windows 10/11 package manager)
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        Write-Host "Installing Python 3.12 via winget..." -ForegroundColor Yellow
+        try {
+            winget install Python.Python.3.12 --silent --accept-source-agreements --accept-package-agreements
+            # Refresh PATH
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            
+            # Check again
+            foreach ($cmd in @("python", "python3", "py")) {
+                try {
+                    $version = & $cmd --version 2>&1 | Out-String
+                    if ($version -match "Python 3\.1[2-9]" -or $version -match "Python 3\.[2-9][0-9]") {
+                        $pythonCmd = $cmd
+                        Write-Host "✓ Python 3.12 installed successfully" -ForegroundColor Green
+                        break
+                    }
+                } catch {}
+            }
+        } catch {
+            Write-Host "winget install failed" -ForegroundColor Red
+        }
+    }
+    
+    # If still not found, show manual instructions
+    if (-not $pythonCmd) {
+        Write-Host "ERROR: Could not auto-install Python 3.12" -ForegroundColor Red
+        Write-Host "" -ForegroundColor Yellow
+        Write-Host "Please install Python 3.12+ manually:" -ForegroundColor Yellow
+        Write-Host "  1. Download from: https://www.python.org/downloads/" -ForegroundColor Yellow
+        Write-Host "  2. Run the installer" -ForegroundColor Yellow
+        Write-Host "  3. IMPORTANT: Check 'Add Python to PATH' during installation" -ForegroundColor Yellow
+        Write-Host "  4. Re-run this installer" -ForegroundColor Yellow
+        exit 1
+    }
 }
 
 Write-Host ""
