@@ -19,14 +19,21 @@ Replaces OpenClaw's built-in memory system with a local, zero-cost alternative u
 
 ## Quick Start
 
-```bash
-# Clone the repository
-git clone https://github.com/yPhi-Box/hunter-memory-system.git
-cd hunter-memory-system
+### Option 1: Download ZIP (Easiest)
 
-# Run the installer
-./install.sh  # Linux/Mac
-.\install.ps1  # Windows
+1. Download: https://github.com/yPhi-box/Hunter-Memory-System/archive/refs/heads/main.zip
+2. Extract the ZIP file
+3. Open terminal/command prompt in the extracted folder
+4. Run the installer:
+   - **Linux/Mac:** `sudo ./install.sh`
+   - **Windows:** Right-click `install.ps1` → Run with PowerShell
+
+### Option 2: Using Git
+
+```bash
+git clone https://github.com/yPhi-box/Hunter-Memory-System.git
+cd Hunter-Memory-System
+sudo ./install.sh  # Linux/Mac
 ```
 
 The installer handles everything: checks system requirements, installs dependencies, indexes your memory files, configures OpenClaw, and sets up auto-start. Takes about 5 minutes.

@@ -2,26 +2,36 @@
 
 Get the Hunter Memory System running in 5 minutes.
 
-## Prerequisites
+## Step 1: Download
 
-- Python 3.12+
-- 1GB+ RAM
-- 500MB+ disk space
-- OpenClaw 2026.2.0+
+**Easy way (no git required):**
+1. Go to: https://github.com/yPhi-box/Hunter-Memory-System
+2. Click the green "Code" button
+3. Click "Download ZIP"
+4. Extract the ZIP file to your Downloads folder
 
-## Installation
-
-### Linux / Mac
-
+**Or using git:**
 ```bash
-cd hunter-memory-system
-./install.sh
+git clone https://github.com/yPhi-box/Hunter-Memory-System.git
 ```
 
-### Windows
+## Step 2: Run the Installer
 
+Open terminal/command prompt in the extracted folder.
+
+**Linux / Mac:**
+```bash
+cd Hunter-Memory-System
+sudo ./install.sh
+```
+
+**Windows:**
+1. Right-click `install.ps1`
+2. Select "Run with PowerShell"
+
+Or from PowerShell:
 ```powershell
-cd hunter-memory-system
+cd Hunter-Memory-System
 .\install.ps1
 ```
 
