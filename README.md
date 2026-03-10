@@ -1,6 +1,6 @@
-﻿# Hunter Memory System for OpenClaw
+# Hunter Memory System for OpenClaw
 
-> Zero-cost local memory system for OpenClaw with hybrid semantic + keyword search
+Zero-cost local memory system for OpenClaw with hybrid semantic + keyword search.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
@@ -8,14 +8,14 @@
 
 ## What This Does
 
-Replaces OpenClaw's built-in memory system with a **local, zero-cost alternative** using sentence-transformers and SQLite vector search.
+Replaces OpenClaw's built-in memory system with a local, zero-cost alternative using sentence-transformers and SQLite vector search.
 
 **Benefits:**
-- **Save $50-100/month** - Zero API costs for memory searches
-- **Faster searches** - <100ms vs 200-500ms
-- **Private** - All data stays local
-- **Cross-platform** - Works on Windows, Linux, Mac
-- **Offline** - No internet required after setup
+- Save $50-100/month - Zero API costs for memory searches
+- Faster searches - Under 100ms vs 200-500ms
+- Private - All data stays local
+- Cross-platform - Works on Windows, Linux, Mac
+- Offline - No internet required after setup
 
 ## Quick Start
 
@@ -26,18 +26,10 @@ cd hunter-memory-system
 
 # Run the installer
 ./install.sh  # Linux/Mac
-# or
 .\install.ps1  # Windows
-
-# Follow the prompts (takes 5 minutes)
 ```
 
-**That's it!** The installer handles everything:
-- Checks system requirements
-- Installs dependencies
-- Indexes your memory files
-- Configures OpenClaw
-- Sets up auto-start (optional)
+The installer handles everything: checks system requirements, installs dependencies, indexes your memory files, configures OpenClaw, and sets up auto-start. Takes about 5 minutes.
 
 ## Requirements
 
@@ -52,50 +44,18 @@ cd hunter-memory-system
 - Ubuntu 24.04
 - macOS (should work, not tested)
 
-## Demo
-
-```bash
-# Start the server
-python3 server.py
-
-# Test it
-curl http://127.0.0.1:8765/health
-# {"status":"ok"}
-
-# Search your memory
-curl -X POST http://127.0.0.1:8765/search \
-  -H "Content-Type: application/json" \
-  -d '{"query": "topic you want to recall", "max_results": 5}'
-```
-
-Or use it naturally in OpenClaw:
-```
-You: "What do you remember about [topic]?"
-OpenClaw: [searches memory and returns results]
-```
-
-## Cost Savings
-
-| Setting | Savings/Month | How |
-|---------|---------------|-----|
-| Memory Plugin | $50-100 | Zero API costs for embeddings |
-| Aggressive Compaction* | $10-30 | Fewer tokens per session |
-| **Total** | **$60-130** | Combined effect |
-
-\* Optional setting the installer can configure (recommended: yes)
-
-## Architecture
+## How It Works
 
 ```
-Memory files  Chunker (500 chars)  Local Embeddings (sentence-transformers)
-                                              
+Memory files -> Chunker (500 chars) -> Local Embeddings (sentence-transformers)
+                                              |
                                          SQLite DB
-                                               
-                              Vector Search    FTS5 (keyword)
-                                               
-                                    Hybrid Scorer
-                                          
-                                 Ranked Results
+                                    /                \
+                        Vector Search            FTS5 (keyword)
+                                    \                /
+                                      Hybrid Scorer
+                                            |
+                                    Ranked Results
 ```
 
 **Components:**
@@ -106,40 +66,73 @@ Memory files  Chunker (500 chars)  Local Embeddings (sentence-transformers)
 - **Server** - FastAPI HTTP API
 - **Plugin** - OpenClaw TypeScript integration
 
+## Cost Savings
+
+| Setting | Savings/Month | How |
+|---------|---------------|-----|
+| Memory Plugin | $50-100 | Zero API costs for embeddings |
+| Aggressive Compaction | $10-30 | Fewer tokens per session |
+| **Total** | **$60-130** | Combined effect |
+
+*Aggressive compaction is optional - installer will ask if you want to enable it.*
+
+## Usage
+
+Once installed, use it naturally in OpenClaw:
+
+```
+You: "What do you remember about [topic]?"
+OpenClaw: [searches memory and returns results]
+```
+
+Or test the API directly:
+
+```bash
+# Start the server
+python3 server.py
+
+# Check health
+curl http://127.0.0.1:8765/health
+
+# Search
+curl -X POST http://127.0.0.1:8765/search \
+  -H "Content-Type: application/json" \
+  -d '{"query": "topic you want to recall", "max_results": 5}'
+```
+
 ## Documentation
 
-- **[Quick Start Guide](QUICK-START.md)** - 5-minute setup (read this first)
-- **[Setup Guide](SETUP-FOR-BLADE.md)** - Detailed manual installation
-- **[Package Contents](PACKAGE-CONTENTS.md)** - What's included
-- **[Plugin README](openclaw-plugin/README.md)** - OpenClaw plugin docs
-- **[Diagnostic Report](DIAGNOSTIC-REPORT.md)** - Test results
+- [Quick Start Guide](QUICK-START.md) - 5-minute setup (read this first)
+- [Setup Guide](SETUP-FOR-BLADE.md) - Detailed manual installation
+- [Package Contents](PACKAGE-CONTENTS.md) - What's included
+- [Plugin README](openclaw-plugin/README.md) - OpenClaw plugin docs
+- [Diagnostic Report](DIAGNOSTIC-REPORT.md) - Test results
 
 ## Manual Installation
 
-If you prefer manual setup over the installer:
+If you prefer manual setup:
 
 ```bash
-# 1. Install Python dependencies
+# 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Index your memory files
+# 2. Index memory files
 python3 cli.py index ~/.openclaw/workspace/memory
 
-# 3. Start the server
-python3 server.py  # Keep this running
+# 3. Start server
+python3 server.py
 
-# 4. Install OpenClaw plugin
+# 4. Install plugin
 openclaw plugins install -l ./openclaw-plugin
 
-# 5. Configure OpenClaw
-# Edit ~/.openclaw/openclaw.json and add:
-# {
-#   "plugins": {
-#     "slots": {
-#       "memory": "hunter-memory"
-#     }
-#   }
-# }
+# 5. Configure OpenClaw (edit ~/.openclaw/openclaw.json)
+{
+  "plugins": {
+    "slots": {
+      "memory": "hunter-memory"
+    }
+  }
+}
 
 # 6. Restart OpenClaw
 openclaw gateway restart
@@ -147,7 +140,7 @@ openclaw gateway restart
 
 ## Auto-Start Setup
 
-### Linux (systemd)
+**Linux (systemd):**
 ```bash
 sudo cp systemd/hunter-memory.service /etc/systemd/system/
 # Edit file: replace USERNAME and INSTALL_PATH
@@ -155,21 +148,7 @@ sudo systemctl enable hunter-memory
 sudo systemctl start hunter-memory
 ```
 
-### macOS (launchd)
-See [QUICK-START.md](QUICK-START.md) for launchd plist example
-
-### Windows (Task Scheduler)
-See [QUICK-START.md](QUICK-START.md) for PowerShell script
-
-## Testing
-
-```bash
-# Run local tests
-python3 test_system.py
-
-# Test from remote machine
-python3 test_remote.py  # Edit SERVER_URL first
-```
+**macOS / Windows:** See [QUICK-START.md](QUICK-START.md) for platform-specific instructions.
 
 ## CLI Tools
 
@@ -189,54 +168,38 @@ python3 cli.py watch /path/to/memory
 
 ## Troubleshooting
 
-### Server won't start
+**Server won't start:**
 ```bash
-# Check Python version
 python3 --version  # Need 3.12+
-
-# Reinstall dependencies
 pip install -r requirements.txt
-
-# Check if port is in use
-lsof -i :8765
+lsof -i :8765  # Check if port is in use
 ```
 
-### Plugin not loading
+**Plugin not loading:**
 ```bash
-# Check plugin status
 openclaw plugins list | grep hunter-memory
-
-# Reinstall plugin
 openclaw plugins install -l ./openclaw-plugin
-
-# Check config
 cat ~/.openclaw/openclaw.json | grep -A 5 "slots"
-
-# Restart gateway
 openclaw gateway restart
 ```
 
-### No search results
+**No search results:**
 ```bash
-# Check if database is populated
 curl http://127.0.0.1:8765/stats
-
-# If total_chunks is 0, reindex
+# If total_chunks is 0:
 python3 cli.py index /path/to/memory
 ```
 
 ## Contributing
 
-Contributions welcome! This is a working system but there's always room for improvement.
+Contributions welcome. Areas for improvement:
 
-**Areas for contribution:**
-- [ ] Add more embedding models
-- [ ] Improve hybrid search scoring
-- [ ] Add web UI for search
-- [ ] Add authentication to server
-- [ ] Create Docker container
-- [ ] Add more tests
-- [ ] Improve documentation
+- Add more embedding models
+- Improve hybrid search scoring
+- Add web UI for search
+- Add authentication to server
+- Create Docker container
+- Add more tests
 
 **To contribute:**
 1. Fork the repo
@@ -247,13 +210,13 @@ Contributions welcome! This is a working system but there's always room for impr
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) file for details
+MIT License - See [LICENSE](LICENSE) file for details.
 
 ## Credits
 
 Built by Hunter (Ben Foxx) for the OpenClaw community.
 
-Powered by:
+**Powered by:**
 - [sentence-transformers](https://www.sbert.net/) - Local embeddings
 - [sqlite-vec](https://github.com/asg017/sqlite-vec) - Vector search
 - [FastAPI](https://fastapi.tiangolo.com/) - HTTP server
@@ -261,15 +224,10 @@ Powered by:
 
 ## Support
 
-- **Issues:** [GitHub Issues](https://github.com/yPhi-Box/hunter-memory-system/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yPhi-Box/hunter-memory-system/discussions)
-- **Community:** [OpenClaw Discord](https://discord.com/invite/clawd)
+- Issues: [GitHub Issues](https://github.com/yPhi-Box/hunter-memory-system/issues)
+- Discussions: [GitHub Discussions](https://github.com/yPhi-Box/hunter-memory-system/discussions)
+- Community: [OpenClaw Discord](https://discord.com/invite/clawd)
 
-## Star History
+---
 
-If this saves you money, consider giving it a star! 
-
---- **Made with  for the OpenClaw community**
-
-
-
+Made for the OpenClaw community.

@@ -1,39 +1,39 @@
-﻿# Contributing to Hunter Memory System
+# Contributing to Hunter Memory System
 
-Thank you for considering contributing! This project aims to provide a free, local memory system for OpenClaw users.
+Thank you for considering contributing. This project provides a free, local memory system for OpenClaw users.
 
-##  Goals
+## Goals
 
 - Zero API costs for memory searches
-- Fast, reliable search (<100ms)
+- Fast, reliable search (under 100ms)
 - Easy to install and use
 - Cross-platform compatibility
 - Privacy-focused (all data local)
 
-##  Getting Started
+## Getting Started
 
-1. **Fork the repository**
-2. **Clone your fork**
+1. Fork the repository
+2. Clone your fork
    ```bash
-   git clone https://github.com/yPhi-Box/hunter-memory-system.git
+   git clone https://github.com/yourusername/hunter-memory-system.git
    cd hunter-memory-system
    ```
-3. **Create a branch**
+3. Create a branch
    ```bash
    git checkout -b feature/your-feature-name
    ```
-4. **Install dependencies**
+4. Install dependencies
    ```bash
    pip install -r requirements.txt
    ```
-5. **Make your changes**
-6. **Test thoroughly**
+5. Make your changes
+6. Test thoroughly
    ```bash
    python3 test_system.py
    ```
-7. **Submit a pull request**
+7. Submit a pull request
 
-##  Code Style
+## Code Style
 
 **Python:**
 - PEP 8 compliant
@@ -50,44 +50,41 @@ Thank you for considering contributing! This project aims to provide a free, loc
 - Clear, concise language
 - Examples for complex features
 - Update README if adding features
+- No emoji or special symbols
 
-##  Testing
+## Testing
 
 Before submitting:
 
-1. **Run tests**
+1. Run tests
    ```bash
    python3 test_system.py
    ```
 
-2. **Test the installer**
+2. Test the installer on a clean system or VM
    ```bash
-   # On a clean system or VM
    ./install.sh  # or install.ps1
    ```
 
-3. **Test cross-platform** (if possible)
-   - Windows
-   - Linux
-   - macOS
+3. Test cross-platform if possible (Windows, Linux, macOS)
 
-4. **Manual testing**
+4. Manual testing:
    - Index files
    - Search queries
    - Plugin integration
 
-##  Pull Request Process
+## Pull Request Process
 
-1. **Update documentation** if you're changing functionality
-2. **Add tests** for new features
-3. **Ensure all tests pass**
-4. **Update CHANGELOG.md** (if exists)
-5. **Describe your changes** clearly in the PR description
-6. **Link any related issues**
+1. Update documentation if changing functionality
+2. Add tests for new features
+3. Ensure all tests pass
+4. Update CHANGELOG.md if it exists
+5. Describe your changes clearly in the PR description
+6. Link any related issues
 
-##  Bug Reports
+## Bug Reports
 
-**Good bug reports include:**
+Good bug reports include:
 - Clear description of the issue
 - Steps to reproduce
 - Expected behavior
@@ -120,51 +117,51 @@ Before submitting:
 [Paste relevant logs here]
 ```
 
-##  Feature Requests
+## Feature Requests
 
-**Good feature requests include:**
+Good feature requests include:
 - Clear use case
 - Why it's valuable
 - Suggested implementation (optional)
 - Willingness to contribute (optional)
 
-##  Areas for Contribution
+## Areas for Contribution
 
-### High Priority
-- [ ] Authentication for HTTP server
-- [ ] Docker container
-- [ ] More comprehensive tests
-- [ ] Performance benchmarks
-- [ ] Memory usage optimization
+**High Priority:**
+- Authentication for HTTP server
+- Docker container
+- More comprehensive tests
+- Performance benchmarks
+- Memory usage optimization
 
-### Medium Priority
-- [ ] Additional embedding models
-- [ ] Web UI for search
-- [ ] Better hybrid scoring algorithm
-- [ ] Incremental indexing (update only changed files)
-- [ ] Database vacuuming/cleanup tools
+**Medium Priority:**
+- Additional embedding models
+- Web UI for search
+- Better hybrid scoring algorithm
+- Incremental indexing (update only changed files)
+- Database vacuuming/cleanup tools
 
-### Nice to Have
-- [ ] Multi-language support
-- [ ] Audio/video transcription integration
-- [ ] Export/import tools
-- [ ] Query history and analytics
-- [ ] Integration with other AI assistants
+**Nice to Have:**
+- Multi-language support
+- Audio/video transcription integration
+- Export/import tools
+- Query history and analytics
+- Integration with other AI assistants
 
-##  Resources
+## Resources
 
-- **OpenClaw Docs:** https://docs.openclaw.ai
-- **sentence-transformers:** https://www.sbert.net/
-- **sqlite-vec:** https://github.com/asg017/sqlite-vec
-- **FastAPI:** https://fastapi.tiangolo.com/
+- OpenClaw Docs: https://docs.openclaw.ai
+- sentence-transformers: https://www.sbert.net/
+- sqlite-vec: https://github.com/asg017/sqlite-vec
+- FastAPI: https://fastapi.tiangolo.com/
 
-##  Questions?
+## Questions?
 
 - Open a [GitHub Discussion](https://github.com/yPhi-Box/hunter-memory-system/discussions)
 - Ask in [OpenClaw Discord](https://discord.com/invite/clawd)
 - Check existing issues/PRs
 
-##  Code of Conduct
+## Code of Conduct
 
 - Be respectful and constructive
 - Focus on what's best for the project
@@ -172,8 +169,6 @@ Before submitting:
 - Assume good intentions
 - Help others learn
 
-##  Thank You!
+## Thank You
 
 Every contribution makes this project better for the OpenClaw community.
-
-
