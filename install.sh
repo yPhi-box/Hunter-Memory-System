@@ -362,11 +362,14 @@ if [ -f "$OPENCLAW_CONFIG" ]; then
     cp "$OPENCLAW_CONFIG" "$OPENCLAW_CONFIG.backup-$(date +%s)"
     
     # Use Python to merge JSON
-    $PYTHON_CMD -c "
+    $PYTHON_CMD << EOF
 import json
-import sys
+import os
+from datetime import datetime
 
 config_path = '$OPENCLAW_CONFIG'
+plugin_path = os.path.abspath('$PLUGIN_PATH')
+
 with open(config_path, 'r') as f:
     config = json.load(f)
 
@@ -379,6 +382,8 @@ if 'entries' not in config['plugins']:
     config['plugins']['entries'] = {}
 if 'allow' not in config['plugins']:
     config['plugins']['allow'] = []
+if 'installs' not in config['plugins']:
+    config['plugins']['installs'] = {}
 
 config['plugins']['slots']['memory'] = '@hunter/openclaw-memory'
 config['plugins']['entries']['@hunter/openclaw-memory'] = {
@@ -392,9 +397,19 @@ config['plugins']['entries']['@hunter/openclaw-memory'] = {
 if '@hunter/openclaw-memory' not in config['plugins']['allow']:
     config['plugins']['allow'].append('@hunter/openclaw-memory')
 
+# Add install record to fix hint mismatch
+config['plugins']['installs']['@hunter/openclaw-memory'] = {
+    'source': 'local',
+    'installPath': plugin_path,
+    'version': '1.0.0',
+    'resolvedName': '@hunter/openclaw-memory',
+    'installedAt': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')[:-3] + 'Z'
+}
+
 with open(config_path, 'w') as f:
     json.dump(config, f, indent=2)
-"
+EOF
+
     echo "✓ OpenClaw configured"
 else
     echo "OpenClaw config not found - skipping (install OpenClaw first)"
