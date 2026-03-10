@@ -97,26 +97,24 @@ if ! command -v pip3 &> /dev/null; then
     echo "pip3 not found. Installing python3-pip and python3-venv..."
     
     if [ "$OS" = "linux" ]; then
-        # Try to install with sudo
-        if sudo -n true 2>/dev/null; then
-            # Passwordless sudo is available
-            if sudo apt-get update -qq && sudo apt-get install -y python3-pip python3-venv; then
+        # Check if running as root
+        if [[ $EUID -eq 0 ]]; then
+            # Running as root, don't use sudo
+            if apt-get update && apt-get install -y python3-pip python3-venv; then
                 echo "✓ pip3 installed successfully"
             else
-                echo "ERROR: Failed to install pip3 with sudo"
+                echo "ERROR: Failed to install pip3"
                 echo "Please run manually:"
-                echo "  sudo apt-get update && sudo apt-get install -y python3-pip python3-venv"
-                echo "Then re-run this installer"
+                echo "  apt-get update && apt-get install -y python3-pip python3-venv"
                 exit 1
             fi
         else
-            # sudo requires password
-            echo ""
-            echo "sudo password required to install pip3..."
+            # Not root, use sudo
             if sudo apt-get update && sudo apt-get install -y python3-pip python3-venv; then
                 echo "✓ pip3 installed successfully"
             else
-                echo "ERROR: Failed to install pip3. Please run manually:"
+                echo "ERROR: Failed to install pip3"
+                echo "Please run manually:"
                 echo "  sudo apt-get update && sudo apt-get install -y python3-pip python3-venv"
                 echo "Then re-run this installer"
                 exit 1
