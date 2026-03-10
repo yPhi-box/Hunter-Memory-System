@@ -92,6 +92,23 @@ echo ""
 # Check for required system packages
 echo "Checking for required system packages..."
 
+# Check for git
+if ! command -v git &> /dev/null; then
+    echo "git not found. Installing..."
+    if [[ $EUID -eq 0 ]]; then
+        apt-get install -y git
+    else
+        sudo apt-get install -y git
+    fi
+    
+    if command -v git &> /dev/null; then
+        echo "✓ git installed successfully"
+    else
+        echo "ERROR: Failed to install git"
+        exit 1
+    fi
+fi
+
 # Check and install pip3 if missing
 if ! command -v pip3 &> /dev/null; then
     echo "pip3 not found. Installing python3-pip and python3-venv..."
