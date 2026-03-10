@@ -1,4 +1,4 @@
-﻿# GitHub Repository - Ready to Publish
+# GitHub Repository - Ready to Publish
 
 ##  What's Ready
 

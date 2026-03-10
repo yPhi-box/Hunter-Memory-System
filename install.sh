@@ -297,12 +297,12 @@ if ! command -v openclaw &> /dev/null; then
 else
     # Run as actual user, not root
     if [ -n "$SUDO_USER" ]; then
-        sudo -u "$SUDO_USER" openclaw plugins install -l "$PLUGIN_PATH" || {
+        sudo -u "$SUDO_USER" bash -l -c "openclaw plugins install -l '$PLUGIN_PATH'" || {
             echo "Plugin install failed - you may need to run manually:"
             echo "  openclaw plugins install -l $PLUGIN_PATH"
         }
     else
-        openclaw plugins install -l "$PLUGIN_PATH" || {
+        bash -l -c "openclaw plugins install -l '$PLUGIN_PATH'" || {
             echo "Plugin install failed - you may need to run manually:"
             echo "  openclaw plugins install -l $PLUGIN_PATH"
         }

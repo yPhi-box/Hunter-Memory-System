@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "@hunter/openclaw-memory",
   "version": "1.0.0",
   "description": "Zero-cost local memory system for OpenClaw with hybrid semantic + keyword search using sentence-transformers and SQLite",

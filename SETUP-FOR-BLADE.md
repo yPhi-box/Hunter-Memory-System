@@ -1,4 +1,4 @@
-﻿# Hunter Memory System - Setup Guide for Blade
+# Hunter Memory System - Setup Guide for Blade
 
 ## What This Is
 Custom local memory system for OpenClaw with **zero API costs**. Replaces OpenClaw's built-in memory (which costs $0.013/1K tokens via OpenAI embeddings).
@@ -56,10 +56,10 @@ Edit `~/.openclaw/openclaw.json` and add:
 {
   "plugins": {
     "slots": {
-      "memory": "hunter-memory"
+      "memory": "@hunter/openclaw-memory"
     },
     "entries": {
-      "hunter-memory": {
+      "@hunter/openclaw-memory": {
         "enabled": true,
         "config": {
           "serverUrl": "http://127.0.0.1:8765",
@@ -101,7 +101,7 @@ curl -X POST http://127.0.0.1:8765/search \
 
 ### Test 4: OpenClaw Plugin
 ```bash
-openclaw plugins list | grep hunter-memory
+openclaw plugins list | grep @hunter/openclaw-memory
 ```
 **Expected:** Shows plugin as "loaded"
 
@@ -116,7 +116,7 @@ OpenClaw should call `memory_search` and return results.
 ## Optional: Auto-Start on Boot
 
 ### Linux (systemd)
-Create `/etc/systemd/system/hunter-memory.service`:
+Create `/etc/systemd/system/@hunter/openclaw-memory.service`:
 ```ini
 [Unit]
 Description=Hunter Memory System Server
@@ -135,8 +135,8 @@ WantedBy=multi-user.target
 
 Enable:
 ```bash
-sudo systemctl enable hunter-memory
-sudo systemctl start hunter-memory
+sudo systemctl enable @hunter/openclaw-memory
+sudo systemctl start @hunter/openclaw-memory
 ```
 
 ### macOS (launchd)
@@ -200,7 +200,7 @@ Or run as background service (use systemd/launchd/Task Scheduler like above, but
 
 ### "Plugin not loaded"
 1. Check plugin list: `openclaw plugins list`
-2. Verify config has `"memory": "hunter-memory"` in `plugins.slots`
+2. Verify config has `"memory": "@hunter/openclaw-memory"` in `plugins.slots`
 3. Restart gateway: `openclaw gateway restart`
 
 ### "Module not found" errors

@@ -1,4 +1,4 @@
-﻿# Ready to Publish - GitHub Setup
+# Ready to Publish - GitHub Setup
 
 ## Your GitHub URLs (Updated)
 

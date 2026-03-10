@@ -1,4 +1,4 @@
-﻿# Hunter Memory System - Package Contents
+# Hunter Memory System - Package Contents
 
 ## What's Included in the Package
 
@@ -24,7 +24,7 @@
 - `install.ps1` - Windows PowerShell installer
 
 ### Auto-Start Helpers
-- `systemd/hunter-memory.service` - Linux systemd service
+- `systemd/@hunter/openclaw-memory.service` - Linux systemd service
 
 ### Documentation
 - `QUICK-START.md` - Fast installation guide (read this first)
@@ -40,7 +40,7 @@
 ## Token Cost Settings Included
 
 ### Automatic (Always Applied)
-**Setting:** `plugins.slots.memory = "hunter-memory"`
+**Setting:** `plugins.slots.memory = "@hunter/openclaw-memory"`
 **Savings:** $50-100/month
 **How:** Replaces OpenClaw's built-in memory (which costs $0.013/1K tokens via OpenAI)
 
@@ -85,7 +85,7 @@ With the memory system, you don't need large context buffers because the system 
 5. **Config Update (Optional)**
    - **Question 1:** "Automatically update config?"
    - **Recommend:** Yes (y)
-   - **What it does:** Adds `plugins.slots.memory = "hunter-memory"`
+   - **What it does:** Adds `plugins.slots.memory = "@hunter/openclaw-memory"`
 
 6. **Compaction Setting (Optional)**
    - **Question 2:** "Enable aggressive compaction (15k tokens)?"
@@ -137,7 +137,7 @@ With the memory system, you don't need large context buffers because the system 
 
 **If you say yes to config update:**
 - `~/.openclaw/openclaw.json` modified
-  - `plugins.slots.memory = "hunter-memory"` added
+  - `plugins.slots.memory = "@hunter/openclaw-memory"` added
 
 **If you say yes to compaction:**
 - `~/.openclaw/openclaw.json` modified
@@ -165,7 +165,7 @@ With the memory system, you don't need large context buffers because the system 
 ### Option B: npm Package (Advanced)
 **Contents:** `openclaw-plugin/` + scripts
 **Format:** `.tgz` (via `npm pack`)
-**Install:** `openclaw plugins install hunter-memory-1.0.0.tgz`
+**Install:** `openclaw plugins install @hunter/openclaw-memory-1.0.0.tgz`
 **Note:** Requires Python setup separately
 
 ### Option C: Pre-Indexed (Time Saver)
@@ -200,7 +200,7 @@ python3 server.py
 1. Stop server (Ctrl+C)
 2. Disable plugin in `openclaw.json`: `"memory": "memory-core"`
 3. Restart OpenClaw: `openclaw gateway restart`
-4. (Optional) Remove files: `rm -rf hunter-memory-system`
+4. (Optional) Remove files: `rm -rf @hunter/openclaw-memory-system`
 
 ### If You Want to Disable Aggressive Compaction
 Restore backup:

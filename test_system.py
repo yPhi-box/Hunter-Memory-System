@@ -1,4 +1,4 @@
-﻿"""
+"""
 Test script to verify memory system works correctly.
 """
 from pathlib import Path

@@ -1,4 +1,4 @@
-﻿# Hunter Memory System - Ready to Ship
+# Hunter Memory System - Ready to Ship
 
 ## What You Have
 
@@ -20,7 +20,7 @@ A complete, production-ready memory system that:
 - **Saves:** $50-100/month
 - **How:** Replaces OpenAI embeddings ($0.013/1K tokens) with local embeddings ($0)
 - **Applied:** Automatically when user answers "yes" to config update
-- **Setting:** `plugins.slots.memory = "hunter-memory"`
+- **Setting:** `plugins.slots.memory = "@hunter/openclaw-memory"`
 
 **2. Aggressive Compaction (Optional)**
 - **Saves:** Extra 10-20% on Claude API costs
@@ -92,7 +92,7 @@ Or change back to 35000 manually.
 
 ### Option 2: npm Package (For Advanced Users)
 **Send:** `.tgz` created by Argus
-**Tell them:** `openclaw plugins install hunter-memory-1.0.0.tgz`
+**Tell them:** `openclaw plugins install @hunter/openclaw-memory-1.0.0.tgz`
 **Note:** Still need Python setup separately
 
 ### What NOT to Send
@@ -198,11 +198,11 @@ Next steps:
 
 ## What Argus Can Test
 
-Argus already has the files at `~/hunter-memory-system` on his VM.
+Argus already has the files at `~/@hunter/openclaw-memory-system` on his VM.
 
 **What he needs to do:**
 1. Install pip: `sudo apt install -y python3-pip`
-2. Run installer: `cd ~/hunter-memory-system && ./install.sh`
+2. Run installer: `cd ~/@hunter/openclaw-memory-system && ./install.sh`
 3. Answer the questions
 4. Verify it works
 5. (Optional) Create npm package: `cd openclaw-plugin && npm pack`
@@ -295,7 +295,7 @@ Done.
 **Message:**
 "This replaces OpenClaw's memory system with a local one. Saves $50-100/month (zero API costs). Optional: enable aggressive compaction for another 10-20% savings. Takes 5 minutes to install. Works on Linux/Mac/Windows. I tested it thoroughly - it's solid."
 
-**Attachment:** `hunter-memory-system.zip`
+**Attachment:** `@hunter/openclaw-memory-system.zip`
 
 **First file to read:** `QUICK-START.md`
 
