@@ -74,15 +74,25 @@ echo ""
 # Check Python version
 PYTHON_CMD=""
 if command -v python3 &> /dev/null; then
-    PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d'.' -f1,2)
-    if (( $(echo "$PYTHON_VERSION >= 3.12" | bc -l) )); then
+    PYTHON_VERSION=$(python3 --version 2>&1 | cut -d' ' -f2)
+    PYTHON_MAJOR=$(echo "$PYTHON_VERSION" | cut -d'.' -f1)
+    PYTHON_MINOR=$(echo "$PYTHON_VERSION" | cut -d'.' -f2)
+    
+    # Check if version is 3.12 or higher
+    if [ "$PYTHON_MAJOR" -eq 3 ] && [ "$PYTHON_MINOR" -ge 12 ]; then
+        PYTHON_CMD="python3"
+    elif [ "$PYTHON_MAJOR" -gt 3 ]; then
         PYTHON_CMD="python3"
     fi
 fi
 
 if [ -z "$PYTHON_CMD" ]; then
     echo "ERROR: Python 3.12+ required but not found"
-    echo "Install: sudo apt install python3.12 python3-pip"
+    if [ "$OS" = "linux" ]; then
+        echo "Install: sudo apt install python3.12 python3-pip"
+    elif [ "$OS" = "mac" ]; then
+        echo "Install: brew install python@3.12"
+    fi
     exit 1
 fi
 
@@ -95,10 +105,19 @@ echo "Checking for required system packages..."
 # Check for git
 if ! command -v git &> /dev/null; then
     echo "git not found. Installing..."
-    if [[ $EUID -eq 0 ]]; then
-        apt-get install -y git
-    else
-        sudo apt-get install -y git
+    
+    if [ "$OS" = "linux" ]; then
+        if [[ $EUID -eq 0 ]]; then
+            apt-get install -y git
+        else
+            sudo apt-get install -y git
+        fi
+    elif [ "$OS" = "mac" ]; then
+        if ! brew install git; then
+            echo "ERROR: Failed to install git via Homebrew"
+            echo "Please install manually: brew install git"
+            exit 1
+        fi
     fi
     
     if command -v git &> /dev/null; then
