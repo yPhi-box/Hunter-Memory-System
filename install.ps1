@@ -103,13 +103,38 @@ Write-Host ""
 Write-Host "Checking for git..." -ForegroundColor Yellow
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-    Write-Host "ERROR: git not found" -ForegroundColor Red
-    Write-Host "Please install Git for Windows from: https://git-scm.com/download/win" -ForegroundColor Yellow
-    Write-Host "Then re-run this installer" -ForegroundColor Yellow
-    exit 1
+    Write-Host "git not found. Attempting to install..." -ForegroundColor Yellow
+    
+    if (Get-Command winget -ErrorAction SilentlyContinue) {
+        try {
+            winget install Git.Git --silent --accept-source-agreements --accept-package-agreements
+            # Refresh PATH
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            
+            if (Get-Command git -ErrorAction SilentlyContinue) {
+                Write-Host "✓ git installed successfully" -ForegroundColor Green
+            } else {
+                Write-Host "ERROR: git installed but not in PATH. Please restart your terminal and re-run installer" -ForegroundColor Red
+                exit 1
+            }
+        } catch {
+            Write-Host "ERROR: Failed to auto-install git" -ForegroundColor Red
+            Write-Host "Please install Git for Windows manually:" -ForegroundColor Yellow
+            Write-Host "  https://git-scm.com/download/win" -ForegroundColor Yellow
+            Write-Host "Then re-run this installer" -ForegroundColor Yellow
+            exit 1
+        }
+    } else {
+        Write-Host "ERROR: winget not available, cannot auto-install git" -ForegroundColor Red
+        Write-Host "Please install Git for Windows manually:" -ForegroundColor Yellow
+        Write-Host "  https://git-scm.com/download/win" -ForegroundColor Yellow
+        Write-Host "Then re-run this installer" -ForegroundColor Yellow
+        exit 1
+    }
+} else {
+    Write-Host "✓ git is available" -ForegroundColor Green
 }
 
-Write-Host "✓ git is available" -ForegroundColor Green
 Write-Host ""
 
 # Check for pip
