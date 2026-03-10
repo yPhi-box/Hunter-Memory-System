@@ -65,6 +65,19 @@ if (-not $pythonCmd) {
 
 Write-Host ""
 
+# Check for git
+Write-Host "Checking for git..." -ForegroundColor Yellow
+
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Host "ERROR: git not found" -ForegroundColor Red
+    Write-Host "Please install Git for Windows from: https://git-scm.com/download/win" -ForegroundColor Yellow
+    Write-Host "Then re-run this installer" -ForegroundColor Yellow
+    exit 1
+}
+
+Write-Host "✓ git is available" -ForegroundColor Green
+Write-Host ""
+
 # Check for pip
 Write-Host "Checking for pip..." -ForegroundColor Yellow
 
