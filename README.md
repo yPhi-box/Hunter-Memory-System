@@ -30,6 +30,12 @@ Replaces OpenClaw's built-in memory system with a local, zero-cost alternative u
 
 ### Option 2: Using Git
 
+**One-line install (Linux/Mac):**
+```bash
+git clone https://github.com/yPhi-box/Hunter-Memory-System.git && cd Hunter-Memory-System && sudo ./install.sh
+```
+
+**Or step-by-step:**
 ```bash
 git clone https://github.com/yPhi-box/Hunter-Memory-System.git
 cd Hunter-Memory-System

@@ -10,7 +10,12 @@ Get the Hunter Memory System running in 5 minutes.
 3. Click "Download ZIP"
 4. Extract the ZIP file to your Downloads folder
 
-**Or using git:**
+**Or using git (one-line install):**
+```bash
+git clone https://github.com/yPhi-box/Hunter-Memory-System.git && cd Hunter-Memory-System && sudo ./install.sh
+```
+
+**Or clone first, then install:**
 ```bash
 git clone https://github.com/yPhi-box/Hunter-Memory-System.git
 ```
