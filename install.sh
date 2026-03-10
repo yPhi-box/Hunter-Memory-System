@@ -249,7 +249,13 @@ echo ""
 
 # Install Python dependencies
 echo "Installing Python dependencies..."
-$PYTHON_CMD -m pip install -q -r requirements.txt
+
+# Try normal pip install first
+if ! $PYTHON_CMD -m pip install -q -r requirements.txt 2>/dev/null; then
+    # If that fails (externally-managed-environment on Ubuntu 24.04+), use --break-system-packages
+    echo "Using --break-system-packages flag for Ubuntu 24.04+ compatibility..."
+    $PYTHON_CMD -m pip install -q --break-system-packages -r requirements.txt
+fi
 
 echo "✓ Dependencies installed"
 echo ""
