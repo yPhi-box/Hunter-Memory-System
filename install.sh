@@ -379,20 +379,37 @@ echo "  ✓ Enabled aggressive compaction"
 echo ""
 echo "Savings: \$60-130/month in API costs"
 echo ""
-echo "Next steps:"
+
+# Start memory server in background
+echo "Starting memory server..."
+nohup $PYTHON_CMD server.py > /tmp/hunter-memory.log 2>&1 &
+SERVER_PID=$!
+sleep 2
+
+# Test if server started
+if curl -s http://127.0.0.1:8765/health > /dev/null 2>&1; then
+    echo "✓ Memory server running (PID: $SERVER_PID)"
+else
+    echo "⚠ Memory server may not have started. Check /tmp/hunter-memory.log"
+fi
+
+# Restart OpenClaw if installed
+if command -v openclaw &> /dev/null; then
+    echo "Restarting OpenClaw..."
+    openclaw gateway restart > /dev/null 2>&1 || true
+    echo "✓ OpenClaw restarted"
+else
+    echo "⚠ OpenClaw not found - install OpenClaw to use the memory system"
+fi
+
 echo ""
-echo "1. Start the memory server:"
-echo "   cd $(pwd)"
-echo "   $PYTHON_CMD server.py &"
-echo ""
-echo "2. Restart OpenClaw:"
-echo "   openclaw gateway restart"
-echo ""
-echo "3. Test it works:"
-echo "   curl http://127.0.0.1:8765/health"
-echo ""
-echo "You're all set! The memory system is ready to use."
+echo "===================================="
+echo "All Done! Memory System is Running"
+echo "===================================="
 echo ""
 echo "Hunter Memory System by yPhi-Box"
 echo "https://github.com/yPhi-box/Hunter-Memory-System"
+echo ""
+echo "Server log: /tmp/hunter-memory.log"
+echo "Server PID: $SERVER_PID"
 echo ""
