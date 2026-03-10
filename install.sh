@@ -89,6 +89,40 @@ fi
 echo "✓ Python found: $($PYTHON_CMD --version)"
 echo ""
 
+# Check for required system packages
+echo "Checking for required system packages..."
+
+# Check and install pip3 if missing
+if ! command -v pip3 &> /dev/null; then
+    echo "pip3 not found. Installing python3-pip and python3-venv..."
+    
+    if [ "$OS" = "linux" ]; then
+        if ! sudo apt-get update && sudo apt-get install -y python3-pip python3-venv; then
+            echo "ERROR: Failed to install pip3. Please run manually:"
+            echo "  sudo apt-get install -y python3-pip python3-venv"
+            exit 1
+        fi
+    elif [ "$OS" = "mac" ]; then
+        echo "Installing pip3 via Homebrew..."
+        if ! brew install python3; then
+            echo "ERROR: Failed to install pip3 via Homebrew"
+            echo "Please install manually: brew install python3"
+            exit 1
+        fi
+    fi
+    
+    echo "✓ pip3 installed successfully"
+fi
+
+# Verify pip3 works
+if ! pip3 --version &> /dev/null; then
+    echo "ERROR: pip3 installed but not working. Please check your Python installation."
+    exit 1
+fi
+
+echo "✓ pip3 is available"
+echo ""
+
 # Install Python dependencies
 echo "Installing Python dependencies..."
 $PYTHON_CMD -m pip install -q -r requirements.txt

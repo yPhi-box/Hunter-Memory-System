@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Installer now checks for and installs pip3 on fresh Ubuntu/Debian systems
+- Installer now checks for and installs pip on fresh macOS systems via Homebrew
+- Windows installer now verifies pip is available before attempting to install dependencies
+
 ## [1.0.0] - 2026-03-09
 
 ### Added

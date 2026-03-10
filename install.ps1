@@ -65,6 +65,26 @@ if (-not $pythonCmd) {
 
 Write-Host ""
 
+# Check for pip
+Write-Host "Checking for pip..." -ForegroundColor Yellow
+
+try {
+    & $pythonCmd -m pip --version 2>&1 | Out-Null
+    Write-Host "✓ pip is available" -ForegroundColor Green
+} catch {
+    Write-Host "ERROR: pip not found. Installing pip..." -ForegroundColor Red
+    try {
+        & $pythonCmd -m ensurepip --upgrade
+        Write-Host "✓ pip installed successfully" -ForegroundColor Green
+    } catch {
+        Write-Host "ERROR: Failed to install pip. Please install manually:" -ForegroundColor Red
+        Write-Host "  python -m ensurepip --upgrade" -ForegroundColor Yellow
+        exit 1
+    }
+}
+
+Write-Host ""
+
 # Install Python dependencies
 Write-Host "Installing Python dependencies..." -ForegroundColor Yellow
 & $pythonCmd -m pip install -q -r requirements.txt
