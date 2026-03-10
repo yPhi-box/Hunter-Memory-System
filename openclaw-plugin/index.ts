@@ -33,6 +33,18 @@ export default function register(api: any) {
   const logger = api.logger;
 
   /**
+   * Safe logging - ensures message is always a string
+   */
+  function log(level: 'info' | 'error', message: string) {
+    const msg = String(message);
+    if (level === 'error') {
+      logger.error(msg);
+    } else {
+      logger.info(msg);
+    }
+  }
+
+  /**
    * Get plugin config with defaults
    */
   function getConfig(): Required<PluginConfig> {
@@ -63,14 +75,14 @@ export default function register(api: any) {
       if (!response.ok) {
         const errorText = await response.text();
         const errorMsg = `HTTP ${response.status}: ${errorText}`;
-        logger.error(`[hunter-memory] Memory server request failed: ${url} - ${errorMsg}`);
+        log('error', `[hunter-memory] Memory server request failed: ${url} - ${errorMsg}`);
         throw new Error(errorMsg);
       }
 
       return await response.json();
     } catch (error: unknown) {
       const errorMsg = error instanceof Error ? error.message : String(error);
-      logger.error(`[hunter-memory] Memory server request failed: ${url} - ${errorMsg}`);
+      log('error', `[hunter-memory] Memory server request failed: ${url} - ${errorMsg}`);
       throw new Error(`Memory server unavailable: ${errorMsg}`);
     }
   }
@@ -132,27 +144,27 @@ export default function register(api: any) {
       const config = getConfig();
 
       const json = (text: string) => ({
-        content: [{ type: 'text' as const, text }]
+        content: [{ type: 'text' as const, text: String(text) }]
       });
 
-      logger.info(`[hunter-memory] memory_search called: query="${query}", maxResults=${maxResults || config.maxResults}`);
+      log('info', `[hunter-memory] memory_search called: query="${query}", maxResults=${maxResults || config.maxResults}`);
 
       try {
         const response: SearchResponse = await request('/search', {
-          query,
+          query: String(query),
           max_results: maxResults || config.maxResults,
           min_score: minScore !== undefined ? minScore : config.minScore,
           semantic_weight: config.semanticWeight,
           keyword_weight: config.keywordWeight,
         });
 
-        logger.info(`[hunter-memory] memory_search returned ${response.total} results`);
+        log('info', `[hunter-memory] memory_search returned ${response.total} results`);
 
         const resultText = formatResults(response.results);
         return json(resultText);
       } catch (error: unknown) {
         const errorMsg = error instanceof Error ? error.message : String(error);
-        logger.error(`[hunter-memory] memory_search failed: ${errorMsg}`);
+        log('error', `[hunter-memory] memory_search failed: ${errorMsg}`);
         return json(`Memory search failed: ${errorMsg}`);
       }
     },
@@ -186,15 +198,15 @@ export default function register(api: any) {
       const { path, from, lines } = params;
 
       const json = (text: string) => ({
-        content: [{ type: 'text' as const, text }]
+        content: [{ type: 'text' as const, text: String(text) }]
       });
 
-      logger.info(`[hunter-memory] memory_get called: path="${path}", from=${from}, lines=${lines}`);
+      log('info', `[hunter-memory] memory_get called: path="${path}", from=${from || 1}, lines=${lines || 'all'}`);
 
       try {
         // Read file directly using Node.js fs
         const fs = await import('fs');
-        const content = await fs.promises.readFile(path, 'utf-8');
+        const content = await fs.promises.readFile(String(path), 'utf-8');
         const allLines = content.split('\n');
 
         let startLine = 1;
@@ -211,16 +223,16 @@ export default function register(api: any) {
         const selectedLines = allLines.slice(startLine - 1, startLine - 1 + numLines);
         const text = selectedLines.join('\n');
 
-        logger.info(`[hunter-memory] memory_get success: ${selectedLines.length} lines returned (${startLine}-${startLine + selectedLines.length - 1})`);
+        log('info', `[hunter-memory] memory_get success: ${selectedLines.length} lines returned (${startLine}-${startLine + selectedLines.length - 1})`);
 
         return json(text);
       } catch (error: unknown) {
         const errorMsg = error instanceof Error ? error.message : String(error);
-        logger.error(`[hunter-memory] memory_get failed: ${path} - ${errorMsg}`);
+        log('error', `[hunter-memory] memory_get failed: ${path} - ${errorMsg}`);
         return json(`Failed to read file: ${errorMsg}`);
       }
     },
   });
 
-  logger.info('Hunter Memory System plugin loaded');
+  log('info', 'Hunter Memory System plugin loaded');
 }
