@@ -97,26 +97,57 @@ if ! command -v pip3 &> /dev/null; then
     echo "pip3 not found. Installing python3-pip and python3-venv..."
     
     if [ "$OS" = "linux" ]; then
-        if ! sudo apt-get update && sudo apt-get install -y python3-pip python3-venv; then
-            echo "ERROR: Failed to install pip3. Please run manually:"
-            echo "  sudo apt-get install -y python3-pip python3-venv"
-            exit 1
+        # Try to install with sudo
+        if sudo -n true 2>/dev/null; then
+            # Passwordless sudo is available
+            if sudo apt-get update -qq && sudo apt-get install -y python3-pip python3-venv; then
+                echo "✓ pip3 installed successfully"
+            else
+                echo "ERROR: Failed to install pip3 with sudo"
+                echo "Please run manually:"
+                echo "  sudo apt-get update && sudo apt-get install -y python3-pip python3-venv"
+                echo "Then re-run this installer"
+                exit 1
+            fi
+        else
+            # sudo requires password
+            echo ""
+            echo "sudo password required to install pip3..."
+            if sudo apt-get update && sudo apt-get install -y python3-pip python3-venv; then
+                echo "✓ pip3 installed successfully"
+            else
+                echo "ERROR: Failed to install pip3. Please run manually:"
+                echo "  sudo apt-get update && sudo apt-get install -y python3-pip python3-venv"
+                echo "Then re-run this installer"
+                exit 1
+            fi
         fi
     elif [ "$OS" = "mac" ]; then
         echo "Installing pip3 via Homebrew..."
-        if ! brew install python3; then
+        if brew install python3; then
+            echo "✓ pip3 installed successfully"
+        else
             echo "ERROR: Failed to install pip3 via Homebrew"
             echo "Please install manually: brew install python3"
             exit 1
         fi
     fi
-    
-    echo "✓ pip3 installed successfully"
 fi
 
-# Verify pip3 works
+# Verify pip3 actually works now
+if ! command -v pip3 &> /dev/null; then
+    echo "ERROR: pip3 not found after installation attempt"
+    echo "Please install manually:"
+    if [ "$OS" = "linux" ]; then
+        echo "  sudo apt-get install -y python3-pip python3-venv"
+    elif [ "$OS" = "mac" ]; then
+        echo "  brew install python3"
+    fi
+    exit 1
+fi
+
 if ! pip3 --version &> /dev/null; then
-    echo "ERROR: pip3 installed but not working. Please check your Python installation."
+    echo "ERROR: pip3 found but not working. Please check your Python installation."
     exit 1
 fi
 
