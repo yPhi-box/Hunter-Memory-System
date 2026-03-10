@@ -269,6 +269,47 @@ else
     ACTUAL_HOME="$HOME"
 fi
 
+# Clean up any previous installation
+echo "Checking for previous installation..."
+
+# Kill any running memory server
+pkill -f "server.py" > /dev/null 2>&1 && echo "✓ Stopped old memory server" || true
+
+# Remove old HMS config entries if present
+if [ -f "$ACTUAL_HOME/.openclaw/openclaw.json" ]; then
+    $PYTHON_CMD -c "
+import json
+import sys
+config_path = '$ACTUAL_HOME/.openclaw/openclaw.json'
+try:
+    with open(config_path, 'r') as f:
+        config = json.load(f)
+    changed = False
+    if 'plugins' in config:
+        if 'slots' in config['plugins'] and 'memory' in config['plugins']['slots']:
+            del config['plugins']['slots']['memory']
+            changed = True
+        if 'entries' in config['plugins']:
+            for key in ['hunter-memory', '@hunter/openclaw-memory']:
+                if key in config['plugins']['entries']:
+                    del config['plugins']['entries'][key]
+                    changed = True
+        if 'allow' in config['plugins']:
+            old_len = len(config['plugins']['allow'])
+            config['plugins']['allow'] = [x for x in config['plugins']['allow'] if x not in ['hunter-memory', '@hunter/openclaw-memory']]
+            if len(config['plugins']['allow']) != old_len:
+                changed = True
+    if changed:
+        with open(config_path, 'w') as f:
+            json.dump(config, f, indent=2)
+        print('✓ Cleaned old HMS config')
+except:
+    pass
+" 2>/dev/null
+fi
+
+echo ""
+
 # Auto-detect OpenClaw workspace
 MEMORY_PATH="$ACTUAL_HOME/.openclaw/workspace/memory"
 
