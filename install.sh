@@ -319,14 +319,20 @@ if 'slots' not in config['plugins']:
     config['plugins']['slots'] = {}
 if 'entries' not in config['plugins']:
     config['plugins']['entries'] = {}
+if 'allow' not in config['plugins']:
+    config['plugins']['allow'] = []
 
-config['plugins']['slots']['memory'] = 'hunter-memory'
-config['plugins']['entries']['hunter-memory'] = {
+config['plugins']['slots']['memory'] = '@hunter/openclaw-memory'
+config['plugins']['entries']['@hunter/openclaw-memory'] = {
     'enabled': True,
     'config': {
         'serverUrl': 'http://127.0.0.1:8765'
     }
 }
+
+# Add to allow list if not already there
+if '@hunter/openclaw-memory' not in config['plugins']['allow']:
+    config['plugins']['allow'].append('@hunter/openclaw-memory')
 
 with open(config_path, 'w') as f:
     json.dump(config, f, indent=2)

@@ -1,5 +1,5 @@
 {
-  "id": "hunter-memory",
+  "id": "@hunter/openclaw-memory",
   "name": "Hunter Memory System",
   "version": "1.0.0",
   "description": "Custom local memory system with zero API costs. Hybrid semantic + keyword search using local embeddings (sentence-transformers) and SQLite vector storage.",

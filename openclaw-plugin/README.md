@@ -57,10 +57,10 @@ Edit your OpenClaw config (`~/.openclaw/openclaw.json`):
 {
   "plugins": {
     "slots": {
-      "memory": "hunter-memory"
+      "memory": "@hunter/openclaw-memory"
     },
     "entries": {
-      "hunter-memory": {
+      "@hunter/openclaw-memory": {
         "enabled": true,
         "config": {
           "serverUrl": "http://127.0.0.1:8765",
@@ -70,7 +70,8 @@ Edit your OpenClaw config (`~/.openclaw/openclaw.json`):
           "keywordWeight": 0.4
         }
       }
-    }
+    },
+    "allow": ["@hunter/openclaw-memory"]
   }
 }
 ```
@@ -206,8 +207,9 @@ python cli.py watch /path/to/memory /path/to/workspace/memory
    {
      "plugins": {
        "slots": {
-         "memory": "hunter-memory"
-       }
+         "memory": "@hunter/openclaw-memory"
+       },
+       "allow": ["@hunter/openclaw-memory"]
      }
    }
    ```
@@ -279,10 +281,10 @@ openclaw gateway restart
 
 ```bash
 # Test memory search
-openclaw plugins test hunter-memory memory_search '{"query": "test"}'
+openclaw plugins test @hunter/openclaw-memory memory_search '{"query": "test"}'
 
 # Check plugin status
-openclaw plugins info hunter-memory
+openclaw plugins info @hunter/openclaw-memory
 ```
 
 ## License

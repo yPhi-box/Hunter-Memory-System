@@ -142,8 +142,17 @@ openclaw plugins install -l ./openclaw-plugin
 {
   "plugins": {
     "slots": {
-      "memory": "hunter-memory"
-    }
+      "memory": "@hunter/openclaw-memory"
+    },
+    "entries": {
+      "@hunter/openclaw-memory": {
+        "enabled": true,
+        "config": {
+          "serverUrl": "http://127.0.0.1:8765"
+        }
+      }
+    },
+    "allow": ["@hunter/openclaw-memory"]
   }
 }
 

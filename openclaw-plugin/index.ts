@@ -48,7 +48,7 @@ export default function register(api: any) {
    * Get plugin config with defaults
    */
   function getConfig(): Required<PluginConfig> {
-    const config = api.config.plugins?.entries?.['hunter-memory']?.config || {};
+    const config = api.config.plugins?.entries?.['@hunter/openclaw-memory']?.config || {};
     return {
       serverUrl: config.serverUrl || 'http://127.0.0.1:8765',
       maxResults: config.maxResults || 10,
