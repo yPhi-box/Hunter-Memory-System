@@ -260,8 +260,17 @@ fi
 echo "✓ Dependencies installed"
 echo ""
 
+# Detect actual user (not root when using sudo)
+if [ -n "$SUDO_USER" ]; then
+    ACTUAL_USER="$SUDO_USER"
+    ACTUAL_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
+else
+    ACTUAL_USER="$USER"
+    ACTUAL_HOME="$HOME"
+fi
+
 # Auto-detect OpenClaw workspace
-MEMORY_PATH="$HOME/.openclaw/workspace/memory"
+MEMORY_PATH="$ACTUAL_HOME/.openclaw/workspace/memory"
 
 if [ -d "$MEMORY_PATH" ]; then
     echo "Found OpenClaw workspace at: $MEMORY_PATH"
@@ -278,7 +287,7 @@ echo ""
 # Install OpenClaw plugin
 echo "Installing OpenClaw plugin..."
 
-OPENCLAW_CONFIG="$HOME/.openclaw/openclaw.json"
+OPENCLAW_CONFIG="$ACTUAL_HOME/.openclaw/openclaw.json"
 PLUGIN_PATH="$(pwd)/openclaw-plugin"
 
 if ! command -v openclaw &> /dev/null; then
@@ -286,10 +295,18 @@ if ! command -v openclaw &> /dev/null; then
     echo "Install OpenClaw first, then run:"
     echo "  openclaw plugins install -l $PLUGIN_PATH"
 else
-    openclaw plugins install -l "$PLUGIN_PATH" || {
-        echo "Plugin install failed - you may need to run manually:"
-        echo "  openclaw plugins install -l $PLUGIN_PATH"
-    }
+    # Run as actual user, not root
+    if [ -n "$SUDO_USER" ]; then
+        sudo -u "$SUDO_USER" openclaw plugins install -l "$PLUGIN_PATH" || {
+            echo "Plugin install failed - you may need to run manually:"
+            echo "  openclaw plugins install -l $PLUGIN_PATH"
+        }
+    else
+        openclaw plugins install -l "$PLUGIN_PATH" || {
+            echo "Plugin install failed - you may need to run manually:"
+            echo "  openclaw plugins install -l $PLUGIN_PATH"
+        }
+    fi
     
     echo "✓ Plugin installed"
 fi
@@ -402,7 +419,11 @@ fi
 # Restart OpenClaw if installed
 if command -v openclaw &> /dev/null; then
     echo "Restarting OpenClaw..."
-    openclaw gateway restart > /dev/null 2>&1 || true
+    if [ -n "$SUDO_USER" ]; then
+        sudo -u "$SUDO_USER" bash -l -c 'openclaw gateway restart' > /dev/null 2>&1 || true
+    else
+        openclaw gateway restart > /dev/null 2>&1 || true
+    fi
     echo "✓ OpenClaw restarted"
 else
     echo "⚠ OpenClaw not found - install OpenClaw to use the memory system"
