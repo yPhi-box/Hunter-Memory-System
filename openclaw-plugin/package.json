@@ -1,0 +1,45 @@
+﻿{
+  "name": "@hunter/openclaw-memory",
+  "version": "1.0.0",
+  "description": "Zero-cost local memory system for OpenClaw with hybrid semantic + keyword search using sentence-transformers and SQLite",
+  "author": "Ben Foxx <bfoxx@foxxinsurance.com>",
+  "license": "MIT",
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "memory",
+    "search",
+    "embeddings",
+    "sqlite",
+    "semantic-search",
+    "vector-search",
+    "local-embeddings",
+    "sentence-transformers"
+  ],
+  "homepage": "https://github.com/yPhi-Box/hunter-memory-system#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yPhi-Box/hunter-memory-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yPhi-Box/hunter-memory-system/issues"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "main": "index.ts",
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.2.0"
+  }
+}
+

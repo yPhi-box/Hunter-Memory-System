@@ -1,0 +1,61 @@
+{
+  "id": "hunter-memory",
+  "name": "Hunter Memory System",
+  "version": "1.0.0",
+  "description": "Custom local memory system with zero API costs. Hybrid semantic + keyword search using local embeddings (sentence-transformers) and SQLite vector storage.",
+  "author": "Hunter (Ben Foxx)",
+  "kind": "memory",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "serverUrl": {
+        "type": "string",
+        "default": "http://127.0.0.1:8765"
+      },
+      "maxResults": {
+        "type": "number",
+        "default": 10
+      },
+      "minScore": {
+        "type": "number",
+        "default": 0.0
+      },
+      "semanticWeight": {
+        "type": "number",
+        "default": 0.6
+      },
+      "keywordWeight": {
+        "type": "number",
+        "default": 0.4
+      }
+    }
+  },
+  "uiHints": {
+    "serverUrl": {
+      "label": "Memory Server URL",
+      "placeholder": "http://127.0.0.1:8765",
+      "description": "HTTP endpoint for the memory system server"
+    },
+    "maxResults": {
+      "label": "Max Results",
+      "placeholder": "10",
+      "description": "Maximum number of search results to return"
+    },
+    "minScore": {
+      "label": "Minimum Score",
+      "placeholder": "0.0",
+      "description": "Minimum similarity score threshold (0-1)"
+    },
+    "semanticWeight": {
+      "label": "Semantic Weight",
+      "placeholder": "0.6",
+      "description": "Weight for semantic similarity in hybrid search (0-1)"
+    },
+    "keywordWeight": {
+      "label": "Keyword Weight",
+      "placeholder": "0.4",
+      "description": "Weight for keyword matching in hybrid search (0-1)"
+    }
+  }
+}
